@@ -28,6 +28,54 @@ public class olacab {
 		String cab=sc.next();
 		System.out.println("Enter km");
 		int rs = sc.nextInt();
+		int bill = Cabselection(cabtypes, cab, rs); // Bill value caclculation for respective cab type 
+		System.out.println("your bill with gst"+GstEstimator(bill)); // bill with Gst
+		
+		
+		System.out.println("journey date");
+		String dc = sc.next();
+		LocalDate jc = LocalDate.parse(dc);
+		System.out.println("confirmed date"+jc);
+		System.out.println("enter pickup time");
+		String timee = sc.next();
+		LocalTime ti = Localtimee(timee); // Converting input time to Time parse
+		int hour = ti.getHour();
+		if (hour > 17 && hour < 19) {
+	    	System.out.println("IT IS PEAK HOURS  so 1.25% extra charges ,your  bill amount is"+  Peakhourchecker(bill,hour));
+			System.out.println("enter date of birth");
+			String dob = sc.next();
+			int age = AgefromDOB(dob); //Calculating age from DOB
+			                          
+			if (age > 60) {      //with age checking for senior citizenship 
+				System.out.println("your age is exceeding 60 so ur bill is" + Peakhourchecker(bill,hour) / 2); //%50 discount for senior citizen
+			} else
+				System.out.println("your total bill is " +  Peakhourchecker(bill,hour)); // or else only peak hour charges added
+		}
+		System.out.println("enter date of birth");
+		String dob = sc.next();
+		int age=AgefromDOB(dob);
+		if (age > 60) {
+			System.out.println("your age is exceeding 60, 50% discount !! your bill is" + GstEstimator(bill) / 2);
+		} else {
+			System.out.println("your total bill is " + GstEstimator(bill));
+		}
+	}
+
+	private static int AgefromDOB(String dob) {
+		LocalDate dd = LocalDate.parse(dob);
+		LocalDate now = LocalDate.now();
+		int df = now.getYear();
+		int gg = dd.getYear();
+		int age = df - gg;
+		return age;
+	}
+
+	private static LocalTime Localtimee(String timee) {
+		LocalTime ti = LocalTime.parse(timee);
+		return ti;
+	}
+
+	private static int Cabselection(String[] cabtypes, String cab, int rs) {
 		int bill=0;
 		if(cab.equals(cabtypes[0])==true) 
 			bill = rs*10;
@@ -35,43 +83,7 @@ public class olacab {
 			bill = rs*15;
 		if(cab.equals(cabtypes[2])==true) 
 		    bill = rs*20;
-		System.out.println("your bill with gst"+GstEstimator(bill));
-		
-		
-		System.out.println("journey date");
-		String dc = sc.next();
-		LocalDate jc = LocalDate.parse(dc);
-		System.out.println("confirmed date" + jc);
-		System.out.println("enter pickup time");
-		String timee = sc.next();
-		LocalTime ti = LocalTime.parse(timee);
-		int hour = ti.getHour();
-		if (hour > 17 && hour < 19) {
-	    	System.out.println("IT IS PEAK HOURS  so 1.25% extra charges ,your  bill amount is"+  Peakhourchecker(bill,hour));
-			System.out.println("enter date of birth");
-			String dob = sc.next();
-			LocalDate dd = LocalDate.parse(dob);
-			LocalDate now = LocalDate.now();
-			int df = now.getYear();
-			int gg = dd.getYear();
-			int age = df - gg;
-			if (age > 60) {
-				System.out.println("your age is exceeding 60 so ur bill is" + Peakhourchecker(bill,hour) / 2);
-			} else
-				System.out.println("your total bill is " +  Peakhourchecker(bill,hour));
-		}
-		System.out.println("enter date of birth");
-		String dob = sc.next();
-		LocalDate dd = LocalDate.parse(dob);
-		LocalDate now = LocalDate.now();
-		int df = now.getYear();
-		int gg = dd.getYear();
-		int age = df - gg;
-		if (age > 60) {
-			System.out.println("your age is exceeding 60, 50% discount !! your bill is" + GstEstimator(bill) / 2);
-		} else {
-			System.out.println("your total bill is " + GstEstimator(bill));
-		}
+		return bill;
 	}
 	    
       	private static double Peakhourchecker(int bill, int hour) {
