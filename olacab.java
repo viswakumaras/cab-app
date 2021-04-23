@@ -9,7 +9,7 @@ public class olacab {
 
 	public static void main(String[] args) {
 		
-		loginValidation();
+		loginValidation();  // getting Login details+validation
 		String [] cabtypes = new String[3];
 		Scanner sc= new Scanner(System.in);
 	
